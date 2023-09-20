@@ -3,14 +3,17 @@ package dev.marvin.savingsmanagement.customer.dao;
 import dev.marvin.savingsmanagement.customer.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
 class CustomerJpaDataAccessServiceTest {
     CustomerJpaDataAccessService underTest;
 
-    @Autowired
+    @Mock
     CustomerRepository customerRepository;
 
     @BeforeEach
@@ -19,18 +22,31 @@ class CustomerJpaDataAccessServiceTest {
     }
 
     @Test
-    void getAllCustomers() {
+    void canGetAllCustomers() {
+        //when
+        underTest.getAllCustomers();
+        //then
+        verify(customerRepository).findAll();
     }
 
     @Test
     void getCustomerById() {
+        //given
+        //when
+        //then
     }
 
     @Test
     void saveCustomer() {
+        //given
+        //when
+        //then
     }
 
     @Test
     void deleteCustomer() {
+        //given
+        //when
+        //then
     }
 }
