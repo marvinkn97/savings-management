@@ -1,4 +1,4 @@
-package dev.marvin.savingsmanagement.customer.rowMapper;
+package dev.marvin.savingsmanagement.customer.rowmapper;
 
 import dev.marvin.savingsmanagement.customer.domain.Customer;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,6 +11,6 @@ import java.sql.SQLException;
 public class CustomerRowMapper implements RowMapper<Customer> {
     @Override
     public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new Customer(rs.getLong("id"), rs.getString("name"), rs.getString("email"), rs.getString("mobile"), rs.getString("memberNumber"), rs.getString("createdAt"), rs.getString("updatedAt"));
+        return new Customer(rs.getLong("id"), rs.getString("name"), rs.getString("email"), rs.getString("mobile"), rs.getString("member_number"), rs.getString("government_ID"), rs.getString("address"));
     }
 }

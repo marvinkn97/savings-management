@@ -32,8 +32,11 @@ class CustomerJpaDataAccessServiceTest {
     @Test
     void getCustomerById() {
         //given
+        long customerId = 1L;
         //when
+        underTest.getCustomerById(customerId);
         //then
+        verify(customerRepository).findById(customerId);
     }
 
     @Test

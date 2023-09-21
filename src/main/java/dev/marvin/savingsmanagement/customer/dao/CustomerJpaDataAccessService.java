@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Repository
+@Repository(value = "jpa")
 public class CustomerJpaDataAccessService implements CustomerDAO {
 
     private final CustomerRepository customerRepository;
@@ -37,5 +37,10 @@ public class CustomerJpaDataAccessService implements CustomerDAO {
     @Override
     public void deleteCustomer(Customer customer) {
         customerRepository.delete(customer);
+    }
+
+    @Override
+    public boolean existsCustomerWithEmail(String email) {
+        return customerRepository.existsCustomerByEmail(email);
     }
 }

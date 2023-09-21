@@ -1,14 +1,28 @@
 package dev.marvin.savingsmanagement;
 
 import com.github.javafaker.Faker;
+import org.flywaydb.core.Flyway;
+import org.junit.jupiter.api.BeforeAll;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import javax.sql.DataSource;
+
 @Testcontainers
 public abstract class AbstractTestContainerTest {
+
+    @BeforeAll
+    static void beforeAll() {
+        // Create the Flyway instance and point it to the database
+        Flyway flyway = Flyway.configure().dataSource(postgreSQLContainer.getJdbcUrl(), postgreSQLContainer.getUsername(), postgreSQLContainer.getPassword()).load();
+
+        // Start the migration
+        flyway.migrate();
+    }
 
     @SuppressWarnings("resource")
     @Container
@@ -24,8 +38,16 @@ public abstract class AbstractTestContainerTest {
         dynamicPropertyRegistry.add("spring.datasource.password", () -> postgreSQLContainer.getPassword());
     }
 
-    private static Faker faker() {
+    protected static Faker faker() {
         return new Faker();
+    }
+
+    protected static DataSource dataSource() {
+        return DataSourceBuilder.create()
+                .url(postgreSQLContainer.getJdbcUrl())
+                .username(postgreSQLContainer.getUsername())
+                .password(postgreSQLContainer.getPassword())
+                .build();
     }
 
 }

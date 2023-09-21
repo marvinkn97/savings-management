@@ -2,12 +2,9 @@ package dev.marvin.savingsmanagement.customer.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "tbl_customers",
-        uniqueConstraints = {@UniqueConstraint(name = "customer_unique_email", columnNames = "email")})
+@Table(name = "tbl_customers", uniqueConstraints = {@UniqueConstraint(name = "customer_unique_email", columnNames = "email")})
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -16,14 +13,24 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Customer {
     @Id
     @SequenceGenerator(name = "customer_id_sequence", sequenceName = "customer_id_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_id_sequence")
     private Long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String mobile;
+
+    @Column(nullable = false)
     private String memberNumber;
-    @CreationTimestamp
-    private String createdDate;
-    @UpdateTimestamp
-    private String updatedDate;
+
+    @Column(name = "government_ID", nullable = false)
+    private String governmentId;
+
+    @Column(nullable = false)
+    private String address;
 }

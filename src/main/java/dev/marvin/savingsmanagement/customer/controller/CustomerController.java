@@ -17,8 +17,8 @@ import java.util.List;
 public class CustomerController {
     private final CustomerService customerService;
 
-    @ResponseStatus(code = HttpStatus.OK)
     @GetMapping
+    @ResponseStatus(code = HttpStatus.OK)
     public List<Customer> getAllCustomers(){
         return customerService.getAllCustomers();
     }
