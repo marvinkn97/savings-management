@@ -10,7 +10,7 @@ public interface CustomerDAO {
     Optional<Customer> getCustomerById(Long customerId);
     void insertCustomer(Customer customer);
     void updateCustomer(Customer customer);
-    void deleteCustomer(Customer customer);
+    void deleteCustomerById(Long customerId);
     boolean existsCustomerWithEmail(String email);
 
 }

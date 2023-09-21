@@ -8,12 +8,13 @@
       +  Implemented endpoints to track the total savings amount received across all users
       +  Implemented endpoints to create and manage multiple savings products, such as Education Savings, Personal Savings, and Vacation Savings.
       +  Ensured proper error handling and validation of incoming requests.
-      +  Implement unit tests to validate the functionality of the API endpoints.
+      +  Implemented unit tests to validate the functionality of the API endpoints.
 
 
    + Technologies Used
 
-     + Spring Boot 3, Data JPA
+     + Spring Boot 3, Data JPA, Data JDBC
      + PostgreSQL on Docker
      + Testcontainers for DAO unit tests
+     + Flyway for seamless data migrations
 

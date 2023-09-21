@@ -47,11 +47,55 @@ public class CustomerJdbcDataAccessService implements CustomerDAO {
 
     @Override
     public void updateCustomer(Customer customer) {
+        if (customer.getName() != null && !customer.getName().isEmpty()) {
+            String sql = """
+                    UPDATE tbl_customers
+                    SET name = ?
+                    WHERE id = ?
+                    """;
+            int rowsAffected = jdbcTemplate.update(sql, customer.getName(), customer.getId());
+            System.out.println("JDBC UPDATE customer name result = " + rowsAffected);
+        }
+        if (customer.getEmail() != null && !customer.getEmail().isEmpty()) {
+            String sql = """
+                    UPDATE tbl_customers
+                    SET email = ?
+                    WHERE id = ?
+                    """;
+            int rowsAffected = jdbcTemplate.update(sql, customer.getEmail(), customer.getId());
+            System.out.println("JDBC UPDATE customer email result = " + rowsAffected);
+        }
+
+        if (customer.getMobile() != null && !customer.getMobile().isEmpty()) {
+            String sql = """
+                    UPDATE tbl_customers
+                    SET mobile = ?
+                    WHERE id = ?
+                    """;
+            int rowsAffected = jdbcTemplate.update(sql, customer.getMobile(), customer.getId());
+            System.out.println("JDBC UPDATE customer mobile result = " + rowsAffected);
+        }
+
+        if (customer.getAddress() != null && !customer.getAddress().isEmpty()) {
+            String sql = """
+                    UPDATE tbl_customers
+                    SET address = ?
+                    WHERE id = ?
+                    """;
+            int rowsAffected = jdbcTemplate.update(sql, customer.getAddress(), customer.getId());
+            System.out.println("JDBC UPDATE customer address result = " + rowsAffected);
+        }
 
     }
 
     @Override
-    public void deleteCustomer(Customer customer) {
+    public void deleteCustomerById(Long customerId) {
+        String sql = """
+                DELETE FROM tbl_customers
+                WHERE id = ?
+                """;
+        int rowsAffected = jdbcTemplate.update(sql, customerId);
+        System.out.println("JDBC DELETE result = " + rowsAffected);
 
     }
 

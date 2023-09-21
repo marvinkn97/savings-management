@@ -2,7 +2,9 @@ package dev.marvin.savingsmanagement.customer.service;
 
 import dev.marvin.savingsmanagement.customer.dao.CustomerDAO;
 import dev.marvin.savingsmanagement.customer.domain.Customer;
+import dev.marvin.savingsmanagement.customer.dto.CustomerFieldUpdateRequest;
 import dev.marvin.savingsmanagement.customer.dto.NewCustomerRegistrationRequest;
+import dev.marvin.savingsmanagement.customer.dto.RequestValidationException;
 import dev.marvin.savingsmanagement.exception.DuplicateResourceException;
 import dev.marvin.savingsmanagement.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,5 +45,41 @@ public class CustomerService {
                 .build();
 
         customerDAO.insertCustomer(customer);
+    }
+
+    public void updateCustomer(Long customerId, CustomerFieldUpdateRequest request) {
+
+        Customer existingCustomer = customerDAO.getCustomerById(customerId).orElseThrow(() -> new ResourceNotFoundException("Customer with given id [%s] not found".formatted(customerId)));
+
+        boolean changes = false;
+
+        if (request.name() != null && !request.name().isEmpty() && !request.name().equals(existingCustomer.getName())) {
+            existingCustomer.setName(request.name());
+            changes = true;
+        }
+
+        if (request.email() != null && !request.email().isEmpty() && !request.email().equals(existingCustomer.getEmail())) {
+            if (customerDAO.existsCustomerWithEmail(request.email())) {
+                throw new DuplicateResourceException("email already taken");
+            }
+            existingCustomer.setEmail(request.email());
+            changes = true;
+        }
+
+        if (request.mobile() != null && !request.mobile().isEmpty() && !request.mobile().equals(existingCustomer.getMobile())) {
+            existingCustomer.setMobile(request.mobile());
+            changes = true;
+        }
+
+        if (request.address() != null && !request.address().isEmpty() && !request.address().equals(existingCustomer.getAddress())) {
+            existingCustomer.setName(request.address());
+            changes = true;
+        }
+
+        if (!changes) {
+            throw new RequestValidationException("no data changes found");
+        }
+
+        customerDAO.updateCustomer(existingCustomer);
     }
 }
