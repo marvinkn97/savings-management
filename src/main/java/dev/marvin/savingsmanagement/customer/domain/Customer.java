@@ -33,4 +33,7 @@ public class Customer {
 
     @Column(nullable = false)
     private String address;
+
+//    @OneToMany(fetch = FetchType.LAZY)
+//    private Set<Account> accounts = new HashSet<>();
 }

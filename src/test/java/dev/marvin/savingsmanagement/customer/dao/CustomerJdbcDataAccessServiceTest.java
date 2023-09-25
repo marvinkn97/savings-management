@@ -425,4 +425,5 @@ class CustomerJdbcDataAccessServiceTest extends AbstractTestContainerTest {
         //then
         assertThat(actual).isFalse();
     }
+
 }
